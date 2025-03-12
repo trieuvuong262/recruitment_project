@@ -25,7 +25,7 @@ class Job(models.Model):
         ('Sản Phụ Khoa 315', 'Sản Phụ Khoa 315'),
         ('Tim Mạch Tiểu Đường 315', 'Tim Mạch Tiểu Đường 315'),
         ('Mắt 315', 'Mắt 315'),
-        ('Phòng Khám Đa Khoa Quốc Tế IVYHEALTH', 'Phòng Khám Đa Khoa Quốc Tế IVYHEALTH'),
+        ('Đa Khoa Quốc Tế IVYHEALTH', 'Đa Khoa Quốc Tế IVYHEALTH'),
         ('Tiêm Chủng', 'Tiêm Chủng'),
         ('Văn Phòng', 'Văn Phòng'),
     ]

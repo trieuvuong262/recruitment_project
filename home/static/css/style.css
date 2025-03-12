@@ -4,6 +4,8 @@ html, body {
     margin: 0;
     display: flex;
     flex-direction: column;
+
+    font-family: 'Quicksand', sans-serif;
 }
 .ck-content {
     color: #000000 !important;  /* Chữ mặc định màu đen */
@@ -13,11 +15,7 @@ main {
     flex-grow: 1;
 }
 
-footer {
-    background: #f8f9fa;
-    padding: 20px;
-    text-align: center;
-}
+
 .container {
     width: 80%;
     margin: auto;

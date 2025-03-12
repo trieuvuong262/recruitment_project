@@ -47,21 +47,36 @@
     </div>
 
     <div class="job-detail-content">
-      <h2>✨ Phúc lợi</h2>
+      <h2> Phúc lợi</h2>
       <p>{{ job.benefits|safe }}</p>
 
-      <h2>📋 Yêu cầu công việc</h2>
+      <h2> Yêu cầu công việc</h2>
       <p>{{ job.requirements|safe }}</p>
 
-      <h2>📌 Mô tả công việc</h2>
+      <h2> Mô tả công việc</h2>
       <p>{{ job.description|safe }}</p>
 
-      <h2>✅ Quyền lợi</h2>
+      <h2> Quyền lợi</h2>
       <p>{{ job.rights|safe }}</p>
     </div>
 
     <div class="job-detail-apply-btn">
       <a href="{% url 'job_apply' job.slug %}" class="btn">ỨNG TUYỂN NGAY</a>
+    </div>
+  </div>
+  <div class="job-related-container">
+    <h2>📌 VIỆC CÓ THỂ BẠN QUAN TÂM</h2>
+    <div class="job-related-list">
+      {% for related in related_jobs %}
+        <div class="job-related-card">
+          <h3><a href="{% url 'job_detail' related.slug %}">{{ related.title }}</a></h3>
+          <p><strong>🏥 Chuyên khoa:</strong> {{ related.specialty }}</p>
+          <p><strong>📍 Địa điểm:</strong> {{ related.location }}</p>
+          <a href="{% url 'job_detail' related.slug %}" class="btn-small">Xem chi tiết</a>
+        </div>
+      {% empty %}
+        <p>Không có công việc liên quan.</p>
+      {% endfor %}
     </div>
   </div>
 {% endblock %}

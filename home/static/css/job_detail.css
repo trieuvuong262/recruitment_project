@@ -49,7 +49,7 @@ body {
 }
 
 .job-detail-content {
-    margin: 20px 0;
+    margin: 17px 0;
 }
 
 .job-detail-content h2 {
@@ -72,4 +72,72 @@ body {
     text-decoration: none;
     font-size: 18px;
     font-weight: bold;
+}
+/* ----------------------- */
+/* Container chính */
+.job-related-container {
+    margin: 40px auto; /* Căn giữa theo chiều ngang */
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 70%;
+    text-align: center; /* Căn giữa nội dung bên trong */
+}
+
+/* Tiêu đề */
+.job-related-container h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+/* Danh sách việc làm */
+.job-related-list {
+    display: flex;
+    justify-content: center; /* Căn giữa các thẻ job-related-card */
+    gap: 15px;
+    flex-wrap: wrap;
+}
+/* Card việc làm */
+.job-related-card {
+    flex: 1;
+    min-width: 280px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.job-related-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Tiêu đề công việc */
+.job-related-card h3 a {
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+}
+
+.job-related-card p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+/* Nút Xem chi tiết */
+.btn-small {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #007bff;
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.btn-small:hover {
+    background: #0056b3;
 }

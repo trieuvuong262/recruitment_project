@@ -107,9 +107,9 @@
   <section class="job-home-filter-section">
     <div class="job-home-filter-container">
         <ul class="job-home-filter-tabs">
-            <li class="job-home-filter-tab active" data-tab="job-home-filter-specialty">Việc Làm Theo Chuyên Môn</li>
-            <li class="job-home-filter-tab" data-tab="job-home-filter-location">Vị Trí Làm Việc</li>
-            <li class="job-home-filter-tab" data-tab="job-home-filter-level">Việc Làm Theo Cấp Bậc</li>
+            <li class="job-home-filter-tab active" data-tab="job-home-filter-specialty">Việc Làm Theo Chuyên Khoa</li>
+            <li class="job-home-filter-tab" data-tab="job-home-filter-location">Việc Làm Theo Tỉnh Thành</li>
+            <li class="job-home-filter-tab" data-tab="job-home-filter-expertise">Việc Làm Theo Chuyên Môn</li>
         </ul>
         <div class="job-home-filter-content">
             <!-- Tab: Việc Làm Theo Chuyên Môn -->
@@ -131,10 +131,10 @@
             </div>
 
             <!-- Tab: Việc Làm Theo Cấp Bậc -->
-            <div id="job-home-filter-level" class="job-home-filter-tab-content">
+            <div id="job-home-filter-expertise" class="job-home-filter-tab-content">
                 <ul>
-                    {% for level in levels %}
-                        <li><a href="{% url 'job_list' %}?level={{ level }}">{{ level }}</a></li>
+                    {% for expertise in expertises %}
+                        <li><a href="{% url 'job_list' %}?expertise={{ expertise }}">{{ expertise }}</a></li>
                     {% endfor %}
                 </ul>
             </div>

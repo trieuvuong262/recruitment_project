@@ -7,7 +7,9 @@ from unidecode import unidecode
 
 def job_detail(request, slug):
     job = get_object_or_404(Job, slug=slug)
-    return render(request, "job/job_detail.html", {"job": job})
+    related_jobs = Job.objects.filter(specialty=job.specialty).exclude(id=job.id)[:3]
+
+    return render(request, "job/job_detail.html", {"job": job,"related_jobs": related_jobs})
 
 def job_list(request):
     jobs = Job.objects.all()

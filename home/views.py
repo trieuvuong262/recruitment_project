@@ -13,8 +13,22 @@ def home(request):
     company_intro = get_introduction()
     albums = Album.objects.all()
     news_list = News.objects.all().order_by('-created_at')  # Truyền danh sách tin tức
+    specialties = Job.objects.values_list('specialty', flat=True).distinct()
+    locations = Job.objects.values_list('location', flat=True).distinct()
+    expertises = Job.objects.values_list('expertise', flat=True).distinct()
 
-    return render(request, 'home/home.html', { 'news_list': news_list,'videos': videos,'albums': albums,'latest_jobs': latest_jobs,'company_intro': company_intro,'banners': banners})
+    context = {
+        'specialties': specialties,
+        'locations': locations,
+        'expertises': expertises,
+        'news_list': news_list,
+        'videos': videos,
+        'albums': albums,
+        'latest_jobs': latest_jobs,
+        'company_intro': company_intro,
+        'banners': banners,
+    }
+    return render(request, 'home/home.html', context)
 
 def about(request):
     return render(request, 'home/about.html')
@@ -44,17 +58,4 @@ def contact(request):
 def apply(request):
     return render(request, 'home/apply.html')
 
-
-def job_home_filter_section(request):
-    specialties = Job.objects.values_list('specialty', flat=True).distinct()
-    locations = Job.objects.values_list('location', flat=True).distinct()
-    levels = Job.objects.values_list('level', flat=True).distinct()
-
-    context = {
-        'specialties': specialties,
-        'locations': locations,
-        'levels': levels,
-    }
-
-    return render(request, 'home/home.html', context)
 

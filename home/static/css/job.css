@@ -65,58 +65,87 @@
 
 
 /* ------------------------------------------------------------*/
+/* Tổng thể phần lọc việc làm */
 .job-home-filter-section {
-    background-color: #f8f9fa;
-    padding: 20px 0;
+    padding: 40px 0;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
 }
 
+/* Container chính */
 .job-home-filter-container {
-    width: 80%;
+    max-width: 90%;
     margin: auto;
-    text-align: center;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
+/* Tabs danh mục */
 .job-home-filter-tabs {
     display: flex;
-    justify-content: center;
+    background: #007bff;
+    padding: 15px;
+    justify-content: space-around;
     list-style: none;
-    padding: 0;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #ddd;
+    margin: 0;
 }
 
 .job-home-filter-tab {
-    padding: 10px 20px;
-    cursor: pointer;
+    color: white;
+    font-size: 16px;
     font-weight: bold;
-    color: #555;
-    transition: all 0.3s ease;
-    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background 0.3s;
 }
 
-.job-home-filter-tab:hover,
+.job-home-filter-tab:hover, 
 .job-home-filter-tab.active {
-    color: #007bff;
-    border-bottom: 3px solid #007bff;
+    background: #0056b3;
 }
 
+/* Nội dung tab */
 .job-home-filter-content {
     padding: 20px;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Ẩn tab khi không active */
 .job-home-filter-tab-content {
     display: none;
-    animation: fadeIn 0.3s ease-in-out;
 }
 
 .job-home-filter-tab-content.active {
     display: block;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Chia danh sách thành 5 cột */
+.job-home-filter-tab-content ul {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Chia thành 5 cột */
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.job-home-filter-tab-content ul li {
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    transition: background 0.3s;
+}
+
+.job-home-filter-tab-content ul li:hover {
+    background: #e0e0e0;
+}
+
+.job-home-filter-tab-content ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    display: block;
 }
