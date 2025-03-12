@@ -1,0 +1,106 @@
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.news-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.news-item {
+    width: 150%;  /* Tăng kích thước khung lên 50% */
+    max-width: 400px;  /* Giới hạn tối đa */
+}
+.news-image {
+    width: 100%;
+    height: auto;
+}
+
+.news-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.news-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+.news-detail-container {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.news-detail-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.news-detail-date {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.news-detail-image {
+    max-width: 100%; /* Giới hạn chiều rộng không vượt quá khung */
+    height: auto; /* Tự động điều chỉnh chiều cao theo tỷ lệ ảnh */
+    border-radius: 6px;
+    display: block;
+    margin: 0 auto; /* Căn giữa ảnh */
+}
+
+.news-detail-content {
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: justify;
+    margin-top: 20px;
+}
+
+.news-detail-content p {
+    margin-bottom: 15px;
+}
+
+/* Căn giữa nút quay lại */
+.news-detail-btn-primary {
+    display: inline-block;
+    margin: 30px auto 0;
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background 0.3s ease;
+}
+
+.news-detail-btn-primary:hover {
+    background-color: #0056b3;
+}
+.news-detail-content img {
+    max-width: 100%; /* Giới hạn chiều rộng ảnh bằng với container */
+    height: auto; /* Giữ nguyên tỉ lệ ảnh */
+    display: block;
+    margin: 10px auto; /* Căn giữa ảnh */
+}

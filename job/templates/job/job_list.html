@@ -1,0 +1,146 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<section class="job-list-page">
+    <h1 class="job-list-title">Danh Sách Việc Làm</h1>
+
+    <!-- Thanh tìm kiếm -->
+    <div class="job-search-filter">
+        <form method="GET" action="{% url 'job_list' %}" id="search-form">
+            <!-- Các trường tìm kiếm và bộ lọc -->
+            <div class="search-filter-row">
+                <div class="job-filter-item">
+                    <select name="job_type" id="job_type" class="job-list-select">
+                        <option value="">Chọn Loại công việc</option>
+
+                        {% for job_type in job_types %}
+                            <option value="{{ job_type }}" {% if request.GET.job_type == job_type %}selected{% endif %}>{{ job_type }}</option>
+                        {% endfor %}
+                        
+                    </select>
+                </div>
+                <div class="job-filter-item">
+                    <select name="specialty" id="specialty" class="job-list-select">
+                        <option value="">Chọn Chuyên khoa</option>
+                        {% for specialty in specialties %}
+                            <option value="{{ specialty }}" {% if request.GET.specialty == specialty %}selected{% endif %}>{{ specialty }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="job-filter-item">
+                    <select name="expertise" id="expertise" class="job-list-select">
+                        <option value="">Chọn Chuyên môn</option>
+                        {% for expertise in expertises %}
+                            <option value="{{ expertise }}" {% if request.GET.expertise == expertise %}selected{% endif %}>{{ expertise }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <!-- Các trường dưới cùng -->
+            <div class="search-filter-row">
+                <div class="job-filter-item">
+                    <select name="location" id="location" class="job-list-select">
+                        <option value="">Chọn Vị trí</option>
+                        {% for location in locations %}
+                            <option value="{{ location }}" {% if request.GET.location == location %}selected{% endif %}>{{ location }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="job-filter-item">
+                    <select name="salary" id="salary" class="job-list-select">
+                        <option value="">Chọn Thu nhập</option>
+                        {% for salary in salaries %}
+                            <option value="{{ salary }}" {% if request.GET.salary == salary %}selected{% endif %}>{{ salary }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="job-filter-item">
+                    <select name="experience" id="experience" class="job-list-select">
+                        <option value="">Chọn Kinh nghiệm</option>
+                        {% for experience in experiences %}
+                            <option value="{{ experience }}" {% if request.GET.experience == experience %}selected{% endif %}>{{ experience }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <!-- Ô tìm kiếm và nút tìm kiếm -->
+            <div class="search-filter-row">
+                <div class="job-filter-item search-btn-container">
+                    <input type="text" name="search_query" placeholder="Tìm kiếm công việc..." class="job-search-input" value="{{ request.GET.search_query }}">
+                    <button type="submit" class="job-search-submit-btn">Tìm kiếm</button>
+                    <!-- Nút Xoá Bộ Lọc -->
+                    <button type="button" id="clear-filters" class="job-search-clear-btn">Xoá Bộ Lọc</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Danh sách công việc -->
+    <div class="job-list-container">
+        {% for job in jobs %}
+            <div class="job-list-item">
+                <h3 class="job-list-item-title">{{ job.title }}</h3>
+                <p class="job-list-location"><i class="fas fa-map-marker-alt"></i> <strong>Vị trí:</strong> {{ job.location }}</p>
+                <p class="job-list-type"><i class="fas fa-briefcase"></i> <strong>Hình thức:</strong> {{ job.get_job_type_display }}</p>
+                <p class="job-list-salary"><i class="fas fa-dollar-sign"></i> <strong>Thu nhập:</strong> {{ job.salary }}</p>
+                <p class="job-list-experience"><i class="fas fa-user-tie"></i> <strong>Kinh nghiệm:</strong> {{ job.experience }}</p>
+                <a href="{% url 'job_detail' job.slug %}" class="job-list-detail-btn">Xem chi tiết</a>
+            </div>
+        {% empty %}
+            <p class="job-list-empty">Không tìm thấy công việc nào.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Phân trang -->
+    <div class="job-list-pagination">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            {% if jobs.has_previous %}
+                <a href="?page=1" class="job-list-page-btn">« Đầu</a>
+                <a href="?page={{ jobs.previous_page_number }}" class="job-list-page-btn">‹ Trước</a>
+            {% else %}
+                <span class="job-list-page-btn job-list-page-btn-disabled">« Đầu</span>
+                <span class="job-list-page-btn job-list-page-btn-disabled">‹ Trước</span>
+            {% endif %}
+
+            <!-- Luôn giữ vị trí số trang cố định -->
+            <span class="job-list-page-info">Trang {{ jobs.number }} / {{ jobs.paginator.num_pages }}</span>
+
+            {% if jobs.has_next %}
+                <a href="?page={{ jobs.next_page_number }}" class="job-list-page-btn">Tiếp ›</a>
+                <a href="?page={{ jobs.paginator.num_pages }}" class="job-list-page-btn">Cuối »</a>
+            {% else %}
+                <span class="job-list-page-btn job-list-page-btn-disabled">Tiếp ›</span>
+                <span class="job-list-page-btn job-list-page-btn-disabled">Cuối »</span>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const clearFiltersBtn = document.getElementById('clear-filters');
+            const form = document.getElementById("search-form");
+        
+            // Xử lý khi người dùng nhấn nút "Xoá Bộ Lọc"
+            if (clearFiltersBtn) {
+                clearFiltersBtn.addEventListener("click", function() {
+                    // Xóa tất cả các tham số bộ lọc trong URL
+                    const urlParams = new URLSearchParams(window.location.search);
+                    
+                    // Xóa các tham số bộ lọc
+                    const filters = ['job_type', 'specialty', 'expertise', 'location', 'salary', 'experience', 'search_query'];
+                    filters.forEach(function(filter) {
+                        urlParams.delete(filter);
+                    });
+        
+                    // Cập nhật lại URL (làm mới trang mà không có các bộ lọc)
+                    window.location.search = urlParams.toString();
+                });
+            }
+        });
+        
+    </script>
+
+</section>
+
+{% endblock %}

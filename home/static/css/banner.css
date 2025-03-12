@@ -1,0 +1,26 @@
+.banner {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+}
+
+.banner-item {
+    margin-bottom: 20px;
+}
+
+.banner-item img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.banner-item h2 {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.banner-item p {
+    color: #666;
+}
+

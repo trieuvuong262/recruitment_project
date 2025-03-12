@@ -1,0 +1,56 @@
+{% extends "home/base.html" %}
+{% block content %}
+<section class="gallery-section">
+    <div class="gallery-container">
+        <h2>Hình Ảnh & Video</h2>
+
+        <div class="gallery-tabs">
+            <button class="gallery-tab-btn active" onclick="openGalleryTab('gallery-images')">Hình Ảnh</button>
+            <button class="gallery-tab-btn" onclick="openGalleryTab('gallery-videos')">Video</button>
+        </div>
+
+        <div id="gallery-images" class="gallery-tab-content active">
+            <h3>Danh Sách Album</h3>
+            <div class="gallery-albums">
+                {% for album in albums %}
+                    <div class="gallery-album">
+                        <a href="{% url 'album_detail' album.id %}">
+                            <img src="{{ album.images.first.file.url }}" alt="{{ album.title }}" class="gallery-album-img">
+                            <p>{{ album.title }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="gallery-videos" class="gallery-tab-content">
+            <h3>Danh Sách Video</h3>
+            <div class="gallery-video-list">
+                {% for video in videos %}
+                    <div class="gallery-video">
+                        <iframe src="{{ video.youtube_link|cut:'watch?v=' }}embed/" frameborder="0" allowfullscreen></iframe>
+                        <p>{{ video.title }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function openGalleryTab(tabName) {
+    document.querySelectorAll('.gallery-tab-content').forEach(tab => {
+        tab.style.display = "none";
+    });
+    document.getElementById(tabName).style.display = "block";
+
+    document.querySelectorAll('.gallery-tab-btn').forEach(btn => {
+        btn.classList.remove("active");
+    });
+    event.currentTarget.classList.add("active");
+}
+document.getElementById("gallery-images").style.display = "block";
+</script>
+
+
+{% endblock %}

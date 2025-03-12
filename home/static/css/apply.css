@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.apply_container {
+    max-width: 900px;
+    background: #fff;
+    margin: 30px auto;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.apply_form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+textarea {
+    height: 80px;
+}
+
+.apply_btn-submit {
+    width: 100%;
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.apply_btn-submit:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+.apply_form-group-inline {
+    display: flex;
+    gap: 10px; /* Khoảng cách giữa các ô */
+}
+
+.apply_form-group-inline div {
+    flex: 1; /* Các ô sẽ có cùng kích thước */
+}
+.file-upload-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #007bff, rgb(142, 229, 255));
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.custom-file-upload:hover {
+    background: linear-gradient(135deg, #023975, #5fb7ff);
+    transform: scale(1.05);
+}
+
+input[type="file"] {
+    display: none; /* Ẩn input mặc định */
+}
+
+span {
+    font-size: 14px;
+    color: #555;
+}

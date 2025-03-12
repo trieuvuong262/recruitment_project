@@ -1,0 +1,230 @@
+/* Định dạng tổng thể */
+.job-list-page {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.job-list-title {
+    text-align: center;
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Thanh tìm kiếm */
+.job-list-search-filter {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.job-list-input,
+.job-list-select,
+.job-list-btn {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.job-list-input {
+    flex: 1;
+}
+
+.job-list-select {
+    width: 200px;
+}
+
+.job-list-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.job-list-btn:hover {
+    background: #0056b3;
+}
+
+/* Danh sách công việc */
+.job-list-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 2 cột */
+    grid-template-rows: repeat(3, auto); /* 3 hàng */
+    gap: 20px;
+}
+
+.job-list-item {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.job-list-item:hover {
+    transform: scale(1.02);
+}
+
+.job-list-item-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.job-list-location,
+.job-list-type,
+.job-list-salary {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.job-list-detail-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.job-list-detail-btn:hover {
+    background: #023974;
+}
+
+/* Phân trang */
+.job-list-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Giữ khoảng cách giữa các phần tử */
+    margin-top: 20px;
+}
+
+.job-list-page-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    margin: 0 5px;
+    transition: background 0.3s;
+}
+
+.job-list-page-btn:hover {
+    background: #0056b3;
+}
+
+.job-list-page-info {
+    min-width: 80px; /* Giữ khoảng cố định để không bị lệch */
+    text-align: center;
+    font-weight: bold;
+}
+/* Khi màn hình nhỏ hơn 768px (tablet, mobile) */
+@media (max-width: 768px) {
+    .job-list-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 cột trên tablet */
+    }
+}
+
+/* Khi màn hình nhỏ hơn 480px (mobile) */
+@media (max-width: 480px) {
+    .job-list-container {
+        grid-template-columns: repeat(1, 1fr); /* 1 cột trên mobile */
+    }
+}
+
+/* Cập nhật style cho phần tìm kiếm */
+.job-search-filter {
+    margin-bottom: 30px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+/* Cập nhật style cho các hàng filter */
+.search-filter-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+/* Cập nhật style cho các item trong filter */
+.job-filter-item {
+    flex: 1;
+    min-width: 250px;
+}
+
+/* Cập nhật style cho select */
+.job-list-select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Cập nhật style cho ô tìm kiếm và nút tìm kiếm */
+.search-btn-container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.job-search-input {
+    padding: 8px;
+    width: 72%;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.job-search-submit-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.job-search-submit-btn:hover {
+    background-color: #45a049;
+}
+
+/* Điều chỉnh khi màn hình nhỏ hơn */
+@media screen and (max-width: 768px) {
+    .search-filter-row {
+        flex-direction: column;
+    }
+    .search-btn-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+.job-search-clear-btn {
+    background-color: #f44336; /* Màu đỏ */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.job-search-clear-btn:hover {
+    background-color: #d32f2f; /* Màu đỏ tối hơn khi hover */
+}
+
+.job-search-clear-btn:focus {
+    outline: none;
+}

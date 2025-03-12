@@ -1,0 +1,259 @@
+{% extends 'home/base.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+{% block content %}
+  <!-- Banner -->
+  <div id="banner" class="carousel slide" data-bs-ride="carousel">
+    <!-- Indicators/dots -->
+    <div class="carousel-indicators">
+      {% for banner in banners %}
+        <button type="button" data-bs-target="#banner" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="{% if forloop.first %}true{% endif %}" aria-label="Slide {{ forloop.counter }}"></button>
+      {% endfor %}
+    </div>
+
+    <div class="carousel-inner">
+      {% for banner in banners %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="d-block w-100" />
+        </div>
+      {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#banner" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#banner" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <!-- Giới thiệu công ty -->
+  {% if company_intro %}
+    <section class="about">
+      <div class="container">
+        <div class="about-content">
+          <img src="{{ company_intro.image.url }}" alt="Giới thiệu công ty" />
+          <div class="about-text">
+            <h2>Về Chúng Tôi</h2>
+            <div class="content">
+              {{ company_intro.description|safe }} <!-- Render HTML từ CKEditor 5 -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+  <!-- Hiển thị danh sách thương hiệu -->
+
+  <section id="career-section" class="career-section">
+    <h3 class="section-title">MÔI TRƯỜNG VÀ VĂN HOÁ CỦA 315 HEALTHCARE</h3>
+    <div class="career-container">
+      <div class="intro-video">
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/T0VclJKhshQ?rel=0&amp;modestbranding=0&amp;playsinline=1&amp;controls=1&amp;enablejsapi=1" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="apply-content">
+          <h3>Nếu bạn mong muốn tìm kiếm một công việc ổn định, đãi ngộ hấp dẫn và khả năng thăng tiến cao, thì 315 Healthcare là điểm đến phù hợp với bạn.</h3>
+          <button class="apply-btn">ỨNG TUYỂN TẠI ĐÂY</button>
+        </div>
+      </div>
+      <div class="benefits-container">
+        <div class="benefit-box">
+          <h3>ĐÃI NGỘ HẤP DẪN</h3>
+          <p>
+            - Ký hợp đồng lao động chính thức sau thử việc<br />
+            - Tham gia đầy đủ Bảo hiểm y tế, bảo hiểm xã hội<br />
+            - Hưởng các chế độ bảo hiểm xã hội như thai sản, ốm đau<br />
+            - Lương thưởng tháng 13, thưởng doanh số<br />
+            - Chế độ 12 ngày phép năm, du lịch teambuilding<br />
+            - Phụ cấp xăng xe, thưởng thâm niên, khám sức khỏe định kỳ<br />
+            - Hỗ trợ công tác, tiền cơm, quà tặng các dịp lễ<br />
+          </p>
+        </div>
+        <div class="benefit-box">
+          <h3>MÔI TRƯỜNG THUẬN LỢI</h3>
+          <p>
+            - Thời gian làm việc linh động theo ca<br />
+            - Môi trường làm việc thân thiện, năng động<br />
+            - Ưu đãi khám chữa bệnh cho nhân viên và người thân<br />
+            - Cam kết làm việc lâu dài<br />
+          </p>
+        </div>
+        <div class="benefit-box">
+          <h3>NÂNG CAO NĂNG LỰC</h3>
+          <p>
+            - Được tài trợ tham gia các chương trình đào tạo chuyên môn<br />
+            - Cơ hội thăng tiến cao trong công việc<br />
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="brands">
+    <h2>CÁC THƯƠNG HIỆU CỦA 315 HEALTHCARE</h2>
+    <div class="brand-logos">
+      <a href="https://brand1.com" target="_blank"><img src="/media/logo/LOGO1.png" alt="Brand 1" /></a>
+      <a href="https://brand2.com" target="_blank"><img src="/media/logo/LOGO2.png" alt="Brand 2" /></a>
+      <a href="https://brand3.com" target="_blank"><img src="/media/logo/LOGO3.png" alt="Brand 3" /></a>
+      <a href="https://brand4.com" target="_blank"><img src="/media/logo/LOGO4.png" alt="Brand 4" /></a>
+      <a href="https://brand5.com" target="_blank"><img src="/media/logo/LOGO5.png" alt="Brand 5" /></a>
+      <a href="https://brand6.com" target="_blank"><img src="/media/logo/LOGO6.png" alt="Brand 6" /></a>
+    </div>
+  </section>
+
+  <section class="job-home-filter-section">
+    <div class="job-home-filter-container">
+        <ul class="job-home-filter-tabs">
+            <li class="job-home-filter-tab active" data-tab="job-home-filter-specialty">Việc Làm Theo Chuyên Môn</li>
+            <li class="job-home-filter-tab" data-tab="job-home-filter-location">Vị Trí Làm Việc</li>
+            <li class="job-home-filter-tab" data-tab="job-home-filter-level">Việc Làm Theo Cấp Bậc</li>
+        </ul>
+        <div class="job-home-filter-content">
+            <!-- Tab: Việc Làm Theo Chuyên Môn -->
+            <div id="job-home-filter-specialty" class="job-home-filter-tab-content active">
+                <ul>
+                    {% for specialty in specialties %}
+                        <li><a href="{% url 'job_list' %}?specialty={{ specialty }}">{{ specialty }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Tab: Vị Trí Làm Việc -->
+            <div id="job-home-filter-location" class="job-home-filter-tab-content">
+                <ul>
+                    {% for location in locations %}
+                        <li><a href="{% url 'job_list' %}?location={{ location }}">{{ location }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Tab: Việc Làm Theo Cấp Bậc -->
+            <div id="job-home-filter-level" class="job-home-filter-tab-content">
+                <ul>
+                    {% for level in levels %}
+                        <li><a href="{% url 'job_list' %}?level={{ level }}">{{ level }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<section class="latest-jobs">
+    <h2 class="section-title">Việc Làm Mới Nhất</h2>
+    <div class="latest-jobs-container">
+        <div class="job-list-container">
+            {% for job in latest_jobs %}
+                <div class="job-list-item">
+                    <h3 class="job-list-item-title">{{ job.title }}</h3>
+                    <p class="job-list-location"><i class="fas fa-map-marker-alt"></i> <strong>Vị trí:</strong> {{ job.location }}</p>
+                    <p class="job-list-type"><i class="fas fa-briefcase"></i> <strong>Hình thức:</strong> {{ job.get_job_type_display }}</p>
+                    <p class="job-list-salary"><i class="fas fa-dollar-sign"></i> <strong>Thu nhập:</strong> {{ job.salary }}</p>
+                    <a href="{% url 'job_detail' job.slug %}" class="job-list-detail-btn">Xem chi tiết</a>
+                </div>
+            {% empty %}
+                <p class="job-list-empty">Chưa có công việc nào mới.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Nút Xem Thêm -->
+        <div class="view-more">
+            <a href="{% url 'job_list' %}" class="btn btn-primary">Xem thêm</a>
+        </div>
+    </div>
+</section>
+
+
+  <!-- Hình ảnh, Video & Tin tức tuyển dụng -->
+  <section class="gallery-section">
+    <div class="gallery-container">
+      <h2 class="gallery-title">Hình Ảnh, Video & Tin tức tuyển dụng</h2>
+
+      <!-- Tabs -->
+      <div class="gallery-tabs">
+        <button class="gallery-tab-btn active" onclick="openGalleryTab('gallery-images')">📷 Hình Ảnh</button>
+        <button class="gallery-tab-btn" onclick="openGalleryTab('gallery-videos')">🎥 Video</button>
+        <button class="gallery-tab-btn" onclick="openGalleryTab('gallery-news')">📰 Tin tức tuyển dụng</button>
+      </div>
+
+      <!-- Danh sách Album -->
+      <div id="gallery-images" class="gallery-tab-content active">
+        <h3 class="gallery-subtitle">Album Ảnh</h3>
+        <div class="gallery-grid">
+          {% for album in albums %}
+            <div class="gallery-item">
+              <a href="{% url 'album_detail' album.id %}" class="gallery-link">
+                <div class="swiper album-slider">
+                  <div class="swiper-wrapper">
+                    {% for image in album.images.all %}
+                      <div class="swiper-slide">
+                        <img src="{{ image.file.url }}" alt="{{ album.title }}" class="gallery-slide" />
+                      </div>
+                    {% endfor %}
+                  </div>
+                  <!-- Nút điều hướng -->
+                  <div class="swiper-button-next"></div>
+                  <div class="swiper-button-prev"></div>
+                </div>
+              </a>
+              <p class="gallery-text">{{ album.title }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Danh Sách Video -->
+      <div id="gallery-videos" class="gallery-tab-content">
+        <h3 class="gallery-subtitle">Danh Sách Video</h3>
+        <div class="gallery-grid">
+          {% for video in videos %}
+            <div class="gallery-item" onclick="openVideoLightbox('{{ video.embed_url }}')">
+              <div class="gallery-video">
+                <img src="https://img.youtube.com/vi/{{ video.youtube_link|slice:'-11:' }}/hqdefault.jpg" alt="{{ video.title }}" />
+                <div class="video-overlay">
+                  <span class="play-icon">▶</span>
+                </div>
+              </div>
+              <p class="gallery-text">{{ video.title }}</p>
+            </div>
+          {% endfor %}
+        </div>
+        <!-- Video Lightbox -->
+        <div id="video-lightbox" class="lightbox" style="display: none;">
+          <div class="lightbox-content">
+            <span class="close-btn" onclick="closeVideoLightbox()">×</span>
+            <iframe id="lightbox-video" allowfullscreen style="width: 1245px; height: 700px;"></iframe>
+          </div>
+        </div>
+      </div>
+      <!-- Danh Sách Tin tức tuyển dụng -->
+      <div id="gallery-news" class="gallery-tab-content">
+        <h3 class="gallery-subtitle">Tin tức tuyển dụng</h3>
+        <div class="news-grid">
+          {% for news in news_list %}
+            <div class="news-item">
+              <a href="{% url 'news_detail' news.id %}" class="news-link">
+                <img src="{{ news.thumbnail.url|default:'/static/images/default-thumbnail.jpg' }}" alt="{{ news.title }}" class="news-image" />
+                <div class="news-overlay">
+                  <p class="news-title">{{ news.title }}</p>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    document.getElementById('gallery-images').style.display = 'block'
+
+  </script>
+
+{% endblock %}

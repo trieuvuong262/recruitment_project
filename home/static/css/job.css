@@ -1,0 +1,122 @@
+.latest-jobs {
+    margin: 40px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.latest-jobs .section-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.job-list-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.job-list-item {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.job-list-item h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.job-list-item p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.job-list-detail-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.job-list-detail-btn:hover {
+    background: #0056b3;
+}
+.latest-jobs-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}.view-more {
+    text-align: center; /* Căn giữa nội dung */
+    margin-top: 20px; /* Tạo khoảng cách phía trên */
+}
+
+.view-more .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+
+/* ------------------------------------------------------------*/
+.job-home-filter-section {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+}
+
+.job-home-filter-container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+.job-home-filter-tabs {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+}
+
+.job-home-filter-tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #555;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.job-home-filter-tab:hover,
+.job-home-filter-tab.active {
+    color: #007bff;
+    border-bottom: 3px solid #007bff;
+}
+
+.job-home-filter-content {
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.job-home-filter-tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.job-home-filter-tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,101 @@
+.brands {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.brands h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.brand-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Khoảng cách giữa các logo */
+    flex-wrap: wrap;
+}
+
+.brand-logos a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-logos img {
+    width: 170px;
+    height: 150px;
+    object-fit: contain; /* Đảm bảo logo không bị méo */
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+.career-section {
+    background: white;
+    padding: 20px 20px;
+    max-width: 1400px;
+    margin: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+.career-container {
+    text-align: left;
+}
+.intro-video {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    background: #007bff;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.apply-content {
+    flex: 1;
+    text-align: center;
+}
+.apply-btn {
+    background: #ff5722;
+    border: none;
+    padding: 12px 20px;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.video-container {
+    flex: 1;
+}
+iframe {
+    width: 100%;
+    height: 366px;
+    border-radius: 10px;
+}
+.benefits-container {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.benefit-box {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.benefit-box h3 {
+    color: #007bff;
+}
+.section-title {
+    text-align: center; /* Căn giữa */
+    font-size: 30px; /* Điều chỉnh kích thước nếu cần */
+margin-bottom: 30px;
+}

@@ -1,0 +1,121 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+
+<div class="apply_container">
+    <h1>Ứng tuyển vào vị trí: {{ job.title }}</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="job_title" value="{{ job.title }}">
+
+        <div class="apply_form-group">
+            <label>📌 Họ tên:</label>
+            {{ form.full_name }}
+        </div>
+
+        <div class="apply_form-group">
+            <label>📅 Ngày sinh:</label>
+            <input type="date" id="dob" name="dob" required>
+        </div>
+        
+
+        <div class="apply_form-group">
+            <label>📞 Số điện thoại:</label>
+            <input type="text" id="phone" name="phone" placeholder="Nhập số điện thoại">
+        </div>
+        <div class="apply_form-group apply_form-group-inline">
+            <div>
+                <label>👤 Giới tính:</label>
+                {{ form.gender }}
+            </div>
+        
+            <div>
+                <label>💍 Tình trạng hôn nhân:</label>
+                {{ form.status }}
+            </div>
+        </div>
+        
+
+        <div class="apply_form-group">
+            <label>📄 Số CCCD/CMND:</label>
+            <input type="text" name="cccd" placeholder="Nhập CCCD/CMND" pattern="\d{9,}" title="Nhập ít nhất 9 chữ số" required oninput="this.value = this.value.replace(/\D/g, '')">
+        </div>
+
+        <div class="apply_form-group">
+            <label>📧 Email nhận kết quả (không bắt buộc):</label>
+            {{ form.email }}
+        </div>
+
+        <div class="apply_form-group">
+            <label>📝 Giới thiệu bản thân (không bắt buộc):</label>
+            {{ form.about }}
+        </div>
+        <div class="apply_form-group apply_form-group-inline">
+            <div>
+                <label>🏙️ Tỉnh/Thành phố:</label>
+                <select id="city" name="city" required>
+                    <option value="">Chọn tỉnh/thành phố</option>
+                </select>
+            </div>
+        
+            <div>
+                <label>🏛️ Quận/Huyện:</label>
+                <select id="district" name="district" disabled required>
+                    <option value="">Chọn quận/huyện</option>
+                </select>
+            </div>
+        
+            <div>
+                <label>🏠 Xã/Phường:</label>
+                <select id="ward" name="ward" disabled required>
+                    <option value="">Chọn xã/phường</option>
+                </select>
+            </div>
+        </div>
+        
+        
+        <div class="apply_form-group">
+            <label>📍 Số nhà, đường:</label>
+            <input type="text" name="street"placeholder="Nhập số nhà/ tên đường">
+        </div>
+
+        <div class="apply_form-group">
+            <label>🎓 Học vấn:</label>
+            {{ form.education }}
+        </div>
+
+        <div class="apply_form-group">
+            <label>💼 Kinh nghiệm làm việc:</label>
+            {{ form.experience }}
+        </div>
+
+        <div class="apply_form-group">
+            <label>🔍 Bạn biết đến thông tin tuyển dụng của chúng tôi qua đâu:</label>
+            {{ form.source }}
+        </div>
+        <div class="apply_form-group">
+            <label>📂 Tải CV của bạn (PDF, DOC, DOCX):</label>
+            <div class="file-upload-container">
+                <label for="cv-input" class="custom-file-upload">📂 Chọn CV</label>
+                <input type="file" id="cv-input" name="cv" accept=".pdf,.doc,.docx">
+                <span id="cv-file-name">Chưa có tệp nào được chọn</span>
+            </div>
+        </div>
+        
+        <div class="apply_form-group">
+            <label>📷 Ảnh chân dung (không bắt buộc):</label>
+            <div class="file-upload-container">
+                <label for="portrait-input" class="custom-file-upload">📷 Chọn ảnh</label>
+                <input type="file" id="portrait-input" name="portrait" accept="image/*">
+                <span id="portrait-file-name">Chưa có tệp nào được chọn</span>
+            </div>
+        </div>
+        
+        
+
+        <button type="submit" class="apply_btn-submit">Gửi đơn ứng tuyển</button>
+    </form>
+</div>
+
+
+{% endblock content %}

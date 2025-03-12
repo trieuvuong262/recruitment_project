@@ -1,0 +1,40 @@
+<!-- news.html - Trang chi tiết tin tức -->
+{% extends "home/base.html" %}
+{% block content %}
+<section class="news-detail">
+    <div class="container">
+        <h2 class="news-title">{{ news.title }}</h2>
+        <p class="news-date">Ngày đăng: {{ news.created_at|date:"d/m/Y" }}</p>
+        <img src="{{ news.image.url }}" alt="{{ news.title }}" class="news-image">
+        <div class="news-content">
+            <p>{{ news.content|safe }}</p>
+        </div>
+        
+        <!-- Các bài viết liên quan -->
+        <h3 class="related-news-title">Tin tức liên quan</h3>
+        <div class="related-news">
+            {% for related in related_news %}
+                <div class="related-news-item">
+                    <a href="{% url 'news_detail' related.id %}" class="related-news-link">
+                        <img src="{{ related.image.url }}" alt="{{ related.title }}" class="related-news-image">
+                        <p class="related-news-text">{{ related.title }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+    .news-detail { padding: 20px; }
+    .news-title { font-size: 28px; font-weight: bold; margin-bottom: 10px; }
+    .news-date { font-size: 14px; color: #666; }
+    .news-image { width: 100%; max-height: 400px; object-fit: cover; margin-top: 10px; }
+    .news-content { margin-top: 20px; font-size: 18px; line-height: 1.6; }
+    .related-news-title { margin-top: 40px; font-size: 22px; font-weight: bold; }
+    .related-news { display: flex; gap: 15px; margin-top: 10px; }
+    .related-news-item { width: 150px; }
+    .related-news-image { width: 100%; height: 100px; object-fit: cover; border-radius: 5px; }
+    .related-news-text { font-size: 14px; text-align: center; margin-top: 5px; }
+</style>
+{% endblock %}

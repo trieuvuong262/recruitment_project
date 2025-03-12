@@ -1,0 +1,67 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+  <div class="job-detail-container">
+    <h1 class="job-detail-title">{{ job.title }}</h1>
+
+    {% if job.image %}
+      <img src="{{ job.image.url }}" alt="{{ job.title }}" class="job-image" />
+    {% endif %}
+
+    <div class="job-detail-info">
+      <div class="job-detail-grid">
+        <div class="job-detail-column">
+          <p>
+            <strong>📌 Chuyên khoa:</strong> {{ job.specialty }}
+          </p>
+          <p>
+            <strong>📚 Chuyên môn:</strong> {{ job.expertise }}
+          </p>
+          <p>
+            <strong>👥 Số lượng tuyển:</strong> {{ job.quantity }}
+          </p>
+        </div>
+        <div class="job-detail-column">
+          <p>
+            <strong>📍Nơi làm việc:</strong> {{ job.location }}
+          </p>
+          <p>
+            <strong>🏢 Địa điểm:</strong> {{ job.office }}
+          </p>
+          <p>
+            <strong>🕒 Hạn nộp CV:</strong> {{ job.deadline }}
+          </p>
+        </div>
+        <div class="job-detail-column">
+          <p>
+            <strong>💰 Thu nhập:</strong> {{ job.salary }}
+          </p>
+          <p>
+            <strong>🎓 Bằng cấp:</strong> {{ job.degree }}
+          </p>
+          <p>
+            <strong>⚡ Kinh nghiệm:</strong> {{ job.experience }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="job-detail-content">
+      <h2>✨ Phúc lợi</h2>
+      <p>{{ job.benefits|safe }}</p>
+
+      <h2>📋 Yêu cầu công việc</h2>
+      <p>{{ job.requirements|safe }}</p>
+
+      <h2>📌 Mô tả công việc</h2>
+      <p>{{ job.description|safe }}</p>
+
+      <h2>✅ Quyền lợi</h2>
+      <p>{{ job.rights|safe }}</p>
+    </div>
+
+    <div class="job-detail-apply-btn">
+      <a href="{% url 'job_apply' job.slug %}" class="btn">ỨNG TUYỂN NGAY</a>
+    </div>
+  </div>
+{% endblock %}
