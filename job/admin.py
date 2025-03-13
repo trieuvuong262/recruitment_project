@@ -5,6 +5,8 @@ from django import forms
 from django.utils.safestring import mark_safe
 from unidecode import unidecode
 from django.db.models import Q
+from .models import EmailTemplate
+from django.db import models
 
 # Tạo form để sử dụng CKEditor5 trong Admin
 class JobAdminForm(forms.ModelForm):
@@ -26,6 +28,8 @@ class JobAdmin(admin.ModelAdmin):
     list_filter = ('job_type', 'gender', 'degree', 'experience', 'specialty', 'expertise', 'location')
     ordering = ('-deadline',)
     prepopulated_fields = {'slug': ('title',)}
+    list_per_page = 20  # Giới hạn mỗi trang hiển thị tối đa 20 ứng viên
+
 
     fieldsets = (
         ('📌 Thông tin chung', {'fields': ('title', 'slug', 'specialty', 'expertise', 'image')}),
@@ -42,6 +46,7 @@ class ApplicantAdmin(admin.ModelAdmin):
         "job_title", "city", "district", "ward", "street", "education",
         "experience", "source", "download_cv", "download_image", "applied_at"
     )
+    list_per_page = 20  # Giới hạn mỗi trang hiển thị tối đa 20 ứng viên
 
     readonly_fields = (
         "full_name", "dob", "phone", "gender", "status", "cccd", "email",
@@ -55,6 +60,7 @@ class ApplicantAdmin(admin.ModelAdmin):
     )
 
     list_filter = ("gender", "status", "education", "experience", "source", "city", "district")
+    actions = ["send_interview_email"]  # Thêm action gửi mail
 
     def download_cv(self, obj):
         """Nút tải CV"""
@@ -100,3 +106,10 @@ def get_search_results(self, request, queryset, search_term):
     return queryset, False
 
 admin.site.register(Applicant, ApplicantAdmin)
+
+class EmailTemplateAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.TextField: {"widget": CKEditor5Widget(config_name="default")},
+    }
+
+admin.site.register(EmailTemplate, EmailTemplateAdmin)

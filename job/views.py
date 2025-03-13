@@ -1,9 +1,17 @@
+import os
 from django.shortcuts import render, get_object_or_404,redirect
-from .models import Job, Applicant
+from .models import EmailTemplate, Job, Applicant
 from .forms import ApplicantForm
 from django.core.paginator import Paginator
 from django.db.models import Q
 from unidecode import unidecode 
+from django.core.mail import send_mail
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+import mimetypes
+import base64
+from django.http import HttpRequest
+
 
 def job_detail(request, slug):
     job = get_object_or_404(Job, slug=slug)
@@ -81,16 +89,71 @@ def job_list(request):
     return render(request, 'job/job_list.html', context)
 
 
-def job_apply(request, slug):
-    job = Job.objects.get(slug=slug)
+def job_apply(request: HttpRequest, slug):
+    job = get_object_or_404(Job, slug=slug)
 
     if request.method == 'POST':
         form = ApplicantForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('apply_success')  
+            application = form.save(commit=False)
+            application.job_title = job.title
+            application.save()
+
+            recipient_email = application.email  # Email của ứng viên
+
+            # Lấy mẫu email từ database
+            email_template = EmailTemplate.objects.first()
+            if email_template:
+                subject = email_template.subject.format(job_title=job.title)
+                html_content = email_template.body.format(
+                    job_title=job.title,
+                    full_name=application.full_name,
+                    dob=application.dob,
+                    phone=application.phone,
+                    email=application.email if application.email else 'Không cung cấp',
+                    street=application.street,
+                    ward=application.ward,
+                    district=application.district,
+                    city=application.city,
+                    education=application.education,
+                    experience=application.experience,
+                    cv=f'<a href="{application.cv.url}">Tải CV</a>' if application.cv else "Chưa tải lên"
+                )
+
+                # Xử lý ảnh CKEditor trong nội dung email
+                for img_tag in ['<img src="', "<img src='"]:
+                    while img_tag in html_content:
+                        start_index = html_content.find(img_tag) + len(img_tag)
+                        end_index = html_content.find('"', start_index) if img_tag == '<img src="' else html_content.find("'", start_index)
+                        img_path = html_content[start_index:end_index]
+
+                        if img_path.startswith('/media/'):  # Kiểm tra nếu ảnh thuộc media
+                            img_full_path = os.path.join(settings.MEDIA_ROOT, img_path.replace('/media/', ''))
+
+                            try:
+                                with open(img_full_path, "rb") as img_file:
+                                    img_data = base64.b64encode(img_file.read()).decode('utf-8')
+                                    mime_type, _ = mimetypes.guess_type(img_path)
+                                    new_src = f"data:{mime_type};base64,{img_data}"
+                                    html_content = html_content.replace(img_path, new_src)
+                            except FileNotFoundError:
+                                print(f"LỖI: Không tìm thấy ảnh {img_full_path}")
+                            except Exception as e:
+                                print(f"LỖI khi xử lý ảnh: {e}")
+
+                # Gửi email HTML
+                email = EmailMultiAlternatives(
+                    subject=subject,
+                    body="Vui lòng xem email dưới dạng HTML.",
+                    from_email=settings.EMAIL_HOST_USER,
+                    to=[recipient_email]
+                )
+                email.attach_alternative(html_content, "text/html")
+                email.send()  # Gửi email
+
+            return redirect('apply_success')
+
     else:
         form = ApplicantForm()
 
     return render(request, 'job/apply.html', {'job': job, 'form': form})
-

@@ -112,6 +112,9 @@ class Job(models.Model):
             self.slug = slugify(self.title)  # Tạo slug tự động từ title
         super().save(*args, **kwargs)
 
+    class Meta:
+        verbose_name_plural = "Danh sách công việc"
+
     def __str__(self):
         return self.title
     
@@ -151,5 +154,38 @@ class Applicant(models.Model):
 
     def __str__(self):
         return self.full_name
+
+class EmailTemplate(models.Model):
+    subject = models.CharField(
+        max_length=255,
+        default="Xác nhận ứng tuyển: {job_title}",
+        verbose_name="Tiêu đề Email"
+    )
+    body = CKEditor5Field(
+        verbose_name="Nội dung Email",
+        config_name="default",
+        default=(
+            "Bạn có thể sử dụng các biến sau trong email:<br>"
+            "- Họ tên: {full_name}<br>"
+            "- Ngày sinh: {dob}<br>"
+            "- Số điện thoại: {phone}<br>"
+            "- Email: {email}<br>"
+            "- Địa chỉ: {street}, {ward}, {district}, {city}<br>"
+            "- Học vấn: {education}<br>"
+            "- Kinh nghiệm: {experience}<br>"
+            "- Vị trí: {job_title}"
+        )
+    )
+    signature_url = models.URLField(
+        null=True,
+        blank=True,
+        verbose_name="URL Chữ ký (Google Drive link)"
+    )
+
+    class Meta:
+        verbose_name_plural = "Mẫu Email"
+
+    def __str__(self):
+        return self.subject
 
 

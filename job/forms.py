@@ -7,6 +7,7 @@ class ApplicantForm(forms.ModelForm):
         model = Applicant
         fields = '__all__'
         widgets = {
+            'job_title': forms.TextInput(attrs={'placeholder': 'Tiêu đề'}),
             'full_name': forms.TextInput(attrs={'placeholder': 'Nhập họ và tên'}),
             'cccd': forms.TextInput(attrs={'placeholder': 'Nhập số CCCD/CMND'}),
             'email': forms.EmailInput(attrs={'placeholder': 'Nhập email nhận kết quả'}),
