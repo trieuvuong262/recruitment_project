@@ -5,13 +5,13 @@ from .forms import ApplicantForm
 from django.core.paginator import Paginator
 from django.db.models import Q
 from unidecode import unidecode 
-from django.core.mail import send_mail
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 import mimetypes
 import base64
 from django.http import HttpRequest
 from .forms import EmailTemplateForm
+from django.contrib import messages
 
 
 def job_detail(request, slug):
@@ -161,7 +161,7 @@ def job_apply(request: HttpRequest, slug):
 
 
 def send_email(request, applicant_id):
-    applicant = get_object_or_404(Applicant, id=applicant_id)
+    applicant = get_object_or_404(Applicant, id=applicant_id)  # Kiểm tra id hợp lệ
 
     # Lấy danh sách email từ settings
     email_choices = [(account["email"], account["name"]) for account in settings.EMAIL_ACCOUNTS]
@@ -188,7 +188,7 @@ def send_email(request, applicant_id):
                 job_title=applicant.job_title
             )
 
-            # Gửi email từ email đã chọn
+            # Gửi email
             email = EmailMultiAlternatives(
                 subject=subject,
                 body="Vui lòng xem email dưới dạng HTML.",
@@ -198,10 +198,10 @@ def send_email(request, applicant_id):
             email.attach_alternative(html_content, "text/html")
             email.send()
 
-            return redirect("admin:job_applicant_changelist")  # Chuyển hướng sau khi gửi
+            messages.success(request, f"Email đã gửi tới {applicant.full_name}.")
+            return redirect("admin:job_applicant_changelist")
 
     else:
-        # Luôn truyền danh sách email khi load trang
-        form = EmailTemplateForm(email_choices=email_choices)  
+        form = EmailTemplateForm(email_choices=email_choices)
 
     return render(request, "admin/send_email.html", {"form": form, "applicant": applicant})

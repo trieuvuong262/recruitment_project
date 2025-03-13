@@ -48,20 +48,12 @@ class ApplicantForm(forms.ModelForm):
         return cleaned_data
 
 
+
 class EmailTemplateForm(forms.Form):
-    sender_email = forms.ChoiceField(
-        choices=[],  # Ban đầu rỗng, sẽ cập nhật trong __init__
-        label="Chọn email gửi đi",
-        widget=forms.Select(attrs={"class": "form-control"})
-    )
-    
-    email_template = forms.ModelChoiceField(
-        queryset=EmailTemplate.objects.all(),
-        empty_label="Chọn mẫu email",
-        label="Mẫu Email",
-        widget=forms.Select(attrs={"class": "form-control"})
-    )
+    sender_email = forms.ChoiceField(choices=[], label="Email gửi")
+    email_template = forms.ModelChoiceField(queryset=EmailTemplate.objects.all(), label="Mẫu email")
 
     def __init__(self, *args, email_choices=None, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["sender_email"].choices = email_choices or []  # Luôn cập nhật choices
+        if email_choices:
+            self.fields["sender_email"].choices = email_choices

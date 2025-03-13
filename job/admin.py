@@ -7,7 +7,7 @@ from unidecode import unidecode
 from django.db.models import Q
 from .models import EmailTemplate
 from django.db import models
-from django.core.mail import send_mail
+from .views import send_email  # Đảm bảo bạn đã import send_email
 from django.contrib import messages
 from django.utils.html import format_html
 from django.conf import settings
@@ -16,6 +16,7 @@ from django.urls import path
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, redirect, render
+
 
 # Tạo form để sử dụng CKEditor5 trong Admin
 class JobAdminForm(forms.ModelForm):
@@ -56,8 +57,7 @@ class SendEmailForm(forms.Form):
 class ApplicantAdmin(admin.ModelAdmin):
     list_display = (
         "full_name", "dob", "phone", "gender", "status", "cccd", "email",
-        "job_title", "city", "district", "ward", "street", "education",
-        "experience", "source", "download_cv", "download_image", "send_email_button", "applied_at"
+        "job_title", "download_cv", "download_image", "send_email_button", "applied_at"
     )
     actions = ["send_interview_email"]
     list_per_page = 20  
@@ -83,33 +83,10 @@ class ApplicantAdmin(admin.ModelAdmin):
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
-            path('send_email/<int:applicant_id>/', self.admin_site.admin_view(self.send_email_view), name='send_email'),
+            path('send_email/<int:applicant_id>/',self.admin_site.admin_view(send_email), name="send_email"),
         ]
         return custom_urls + urls
 
-    def send_email_view(self, request, applicant_id):
-        """View hiển thị popup chọn mẫu email và gửi mail"""
-        applicant = Applicant.objects.get(pk=applicant_id)
-
-        if request.method == "POST":
-            form = SendEmailForm(request.POST)
-            if form.is_valid():
-                template = form.cleaned_data['email_template']
-                subject = template.subject
-                body = template.body
-                recipient = [applicant.email]
-
-                send_mail(subject, body, settings.EMAIL_HOST_USER, recipient, fail_silently=False)
-                
-                messages.success(request, f"📨 Email đã gửi tới {applicant.full_name} ({applicant.email})")
-                return JsonResponse({"status": "success"})
-
-        else:
-            form = SendEmailForm()
-
-        return render(request, "admin/send_email.html", {"form": form, "applicant": applicant})
-
-    
     
     def download_cv(self, obj):
         """Nút tải CV"""

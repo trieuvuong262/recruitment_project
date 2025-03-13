@@ -1,36 +1,13 @@
 {% extends "admin/base_site.html" %}
+{% load static %}
 
 {% block content %}
-<div class="container">
-    <div class="card shadow-lg mt-4">
-        <div class="card-header bg-primary text-white text-center">
-            <h2>✉️ Gửi Email</h2>
-        </div>
-        <div class="card-body">
-            <p><strong>Ứng viên:</strong> {{ applicant.full_name }} (<a href="mailto:{{ applicant.email }}">{{ applicant.email }}</a>)</p>
+<h1>Gửi Email cho {{ applicant.full_name }}</h1>
 
-            <form method="post" action="{% url 'send_email' applicant.id %}" id="emailForm">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label for="id_sender_email" class="form-label">Chọn email gửi đi:</label>
-                    {{ form.sender_email }}
-                </div>
-
-                <div class="mb-3">
-                    <label for="id_email_template" class="form-label">Chọn mẫu email:</label>
-                    {{ form.email_template }}
-                </div>
-
-                <button type="submit" class="btn btn-success w-100">
-                    📩 Gửi Email
-                </button>
-            </form>
-        </div>
-
-        <div class="card-footer text-center">
-            <a href="javascript:window.close();" class="btn btn-danger">❌ Đóng</a>
-        </div>
-    </div>
-</div>
-
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="button button-primary">Gửi Email</button>
+    <a href="{% url 'admin:job_applicant_changelist' %}" class="button">Hủy</a>
+</form>
 {% endblock %}
