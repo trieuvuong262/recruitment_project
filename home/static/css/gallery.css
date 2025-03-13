@@ -1,7 +1,7 @@
 
 .gallery-section {
     padding: 50px 0;
-    background-color: #f8f9fa;
+    background-color: white;
     text-align: center;
 }
 .gallery-container {
@@ -80,7 +80,7 @@
     left: 0;
     width: 100%;
     background: rgba(0, 0, 0, 0.6);
-    color: #fff;
+    color: white;
     padding: 10px;
     text-align: center;
     font-size: 1rem;

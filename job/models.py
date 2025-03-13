@@ -129,6 +129,7 @@ class Applicant(models.Model):
     email = models.EmailField("Email", blank=True, null=True)
     about = models.TextField("Giới thiệu bản thân", blank=True, null=True)
     job_title = models.CharField("Vị trí ứng tuyển", max_length=255, blank=True, null=True)  # Thêm trường này
+    email_sent = models.BooleanField(default=False)  # Đánh dấu đã gửi email
 
     # Trường lấy từ API
     city = models.CharField("Tỉnh/Thành phố", max_length=255, blank=True, null=True)

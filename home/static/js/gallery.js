@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Slider Swiper
+    const galleryImages = document.getElementById("gallery-images");
+
     document.querySelectorAll(".album-slider").forEach((slider) => {
         new Swiper(slider, {
             loop: true,
@@ -53,3 +55,16 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(() => { lightboxVideo.src = ""; }, 100); // Đợi 100ms rồi reset URL để dừng video
     };
 });
+function openGalleryTab(tabName) {
+    document.querySelectorAll('.gallery-tab-content').forEach(tab => {
+        tab.style.display = "none";
+    });
+    document.getElementById(tabName).style.display = "block";
+
+    document.querySelectorAll('.gallery-tab-btn').forEach(btn => {
+        btn.classList.remove("active");
+    });
+    event.currentTarget.classList.add("active");
+}
+
+

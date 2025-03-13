@@ -57,7 +57,7 @@ class SendEmailForm(forms.Form):
 class ApplicantAdmin(admin.ModelAdmin):
     list_display = (
         "full_name", "dob", "phone", "email",
-        "job_title", "download_cv", "download_image", "send_email_button", "applied_at"
+        "job_title", "download_cv", "download_image", "send_email_button",'email_status'
     )
     actions = ["send_interview_email"]
     list_per_page = 20  
@@ -87,7 +87,14 @@ class ApplicantAdmin(admin.ModelAdmin):
         ]
         return custom_urls + urls
 
-    
+    def email_status(self, obj):
+        """Hiển thị trạng thái đã gửi email"""
+        if obj.email_sent:
+            return format_html('<span style="color: green;">✔ Đã gửi</span>')
+        return format_html('<span style="color: red;">✖ Chưa gửi</span>')
+
+    email_status.short_description = "Trạng thái email"
+
     def download_cv(self, obj):
         """Nút tải CV"""
         if obj.cv:

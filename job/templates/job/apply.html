@@ -1,7 +1,6 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-
 <div class="apply_container">
     <h1>Ứng tuyển vào vị trí: {{ job.title }}</h1>
     <form method="POST" enctype="multipart/form-data">
@@ -18,7 +17,6 @@
             <input type="date" id="dob" name="dob" required>
         </div>
         
-
         <div class="apply_form-group">
             <label>📞 Số điện thoại:</label>
             <input type="text" id="phone" name="phone" placeholder="Nhập số điện thoại">
@@ -34,7 +32,6 @@
                 {{ form.status }}
             </div>
         </div>
-        
 
         <div class="apply_form-group">
             <label>📄 Số CCCD/CMND:</label>
@@ -50,6 +47,7 @@
             <label>📝 Giới thiệu bản thân (không bắt buộc):</label>
             {{ form.about }}
         </div>
+
         <div class="apply_form-group apply_form-group-inline">
             <div>
                 <label>🏙️ Tỉnh/Thành phố:</label>
@@ -72,8 +70,7 @@
                 </select>
             </div>
         </div>
-        
-        
+
         <div class="apply_form-group">
             <label>📍 Số nhà, đường:</label>
             <input type="text" name="street"placeholder="Nhập số nhà/ tên đường">
@@ -93,6 +90,7 @@
             <label>🔍 Bạn biết đến thông tin tuyển dụng của chúng tôi qua đâu:</label>
             {{ form.source }}
         </div>
+
         <div class="apply_form-group">
             <label>📂 Tải CV của bạn (PDF, DOC, DOCX):</label>
             <div class="file-upload-container">
@@ -101,7 +99,7 @@
                 <span id="cv-file-name">Chưa có tệp nào được chọn</span>
             </div>
         </div>
-        
+
         <div class="apply_form-group">
             <label>📷 Ảnh chân dung (không bắt buộc):</label>
             <div class="file-upload-container">
@@ -110,12 +108,13 @@
                 <span id="portrait-file-name">Chưa có tệp nào được chọn</span>
             </div>
         </div>
-        
-        
+
 
         <button type="submit" class="apply_btn-submit">Gửi đơn ứng tuyển</button>
     </form>
 </div>
-
+<div id="loading-lightbox" class="loading-lightbox" style="display: none;">
+    <div class="loading-spinner">Đang gửi đơn...</div>
+</div>
 
 {% endblock content %}

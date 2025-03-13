@@ -110,4 +110,21 @@ document.addEventListener("DOMContentLoaded", function () {
             portraitFileName.textContent = this.files[0] ? this.files[0].name : "Chưa có tệp nào được chọn";
         });
     }
+    const loadingLightbox = document.getElementById('loading-lightbox');
+    const form = document.querySelector('form');
+
+    if (form) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Ngừng gửi form để hiển thị hiệu ứng chờ
+
+            if (loadingLightbox) {
+                loadingLightbox.style.display = 'flex'; // Hiển thị hiệu ứng chờ
+            }
+
+            // Mô phỏng việc gửi form (hoặc gửi thực tế ở đây)
+            setTimeout(() => {
+                form.submit(); // Gửi form sau khi chờ 2 giây
+            }, 2);
+        });
+    }
 });

@@ -1,126 +1,110 @@
-/* Định dạng chung */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-/* Thanh điều hướng */
+/* Navbar */
 .navbar {
-    background: linear-gradient(90deg, #007bff, #0056b3);
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;  /* Cố định vị trí của navbar */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1a93f7;  /* Chọn màu nền của navbar */
+    z-index: 1000;  /* Đảm bảo navbar luôn hiển thị trên các phần tử khác */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Thêm bóng đổ cho navbar */
+    padding: 10px 0;  /* Khoảng cách trên và dưới của navbar */
 }
 
 /* Logo */
-.logo a {
-    color: #fff;
-    font-size: 22px;
-    font-weight: bold;
+.navbar .logo a {
+    color: #ffffff;       /* Màu chữ của logo */
     text-decoration: none;
+    font-size: 24px;
+    padding: 10px;
+    display: block;
+    font-weight: bold;
 }
 
-/* Danh sách menu */
-.nav-links {
-    list-style: none;
-    display: flex;
-    margin: 0;
+/* Danh sách liên kết trong navbar */
+.navbar .nav-links {
+    list-style: none;     /* Xóa dấu chấm trong danh sách */
     padding: 0;
+    margin: 0;
+    display: flex;        /* Sắp xếp các item ngang */
+    justify-content: center; /* Canh giữa các liên kết */
+    gap: 20px;            /* Khoảng cách giữa các mục */
+    align-items: center;  /* Căn chỉnh các item theo chiều dọc */
 }
 
-.nav-links li {
+/* Các item trong navbar */
+.navbar .nav-links li {
+    padding: 10px 0;
+}
+
+/* Liên kết trong navbar */
+.navbar .nav-links a {
+    color: #ffffff;          /* Màu chữ của các liên kết */
+    text-decoration: none; /* Không gạch dưới */
+    font-size: 16px;
+    padding: 5px 10px;
+    transition: color 0.3s ease; /* Hiệu ứng chuyển màu */
+}
+
+/* Khi hover vào liên kết */
+.navbar .nav-links a:hover {
+    color: #ffffff;       /* Màu chữ khi hover */
+}
+
+/* Dropdown menu */
+.navbar .dropdown {
     position: relative;
 }
 
-/* Liên kết menu */
-.nav-links a {
-    text-decoration: none;
-    color: white;
-    padding: 10px 15px;
-    display: block;
-    transition: background 0.3s;
-}
-
-/* Hiệu ứng hover */
-.nav-links a:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-}
-
-/* Dropdown */
-.dropdown-menu {
-    display: none;
+.navbar .dropdown-menu {
+    display: none;        /* Ẩn menu mặc định */
     position: absolute;
-    background: white;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    min-width: 200px;
-    top: 100%;
+    top: 100%;            /* Đặt dropdown ở dưới item */
     left: 0;
-    z-index: 1000;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ cho dropdown */
+    list-style: none;
     padding: 0;
+    margin: 0;
 }
 
-.dropdown-menu li {
-    display: block;
+.navbar .dropdown:hover .dropdown-menu {
+    display: block;       /* Hiện dropdown khi hover vào mục dropdown */
+    background-color: #007bff; /* Màu nền khi hover */
+
 }
 
-.dropdown-menu a {
-    color: #333;
-    padding: 10px 15px;
-    display: block;
+.navbar .dropdown-menu li {
+    padding: 10px;
+    width: 200px;
 }
 
-.dropdown-menu a:hover {
-    background: #007bff;
-    color: white;
-}
-
-/* Hiển thị dropdown khi hover */
-.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
-/* Nút nộp hồ sơ */
-.apply-btn {
-    background: white;
-    color: #007bff;
-    padding: 8px 15px;
-    border-radius: 5px;
+/* Nút "Nộp hồ sơ" */
+.navbar .apply-btn {
+    background-color: #ffffff; /* Nền màu xanh */
+    color: rgb(98, 114, 255);              /* Màu chữ trắng */
+    padding: 10px 20px;
     text-decoration: none;
+    border-radius: 5px;        /* Bo góc nút */
     font-weight: bold;
-    transition: 0.3s;
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu */
 }
 
+.navbar .apply-btn:hover {
+    background-color: #0056b3; /* Màu nền khi hover */
+}
 
+/* Khoảng cách dưới navbar để tránh bị che nội dung */
+body {
+    margin-top: 80px; /* Khoảng cách dưới navbar */
+}
 
-/* Responsive */
-@media screen and (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-    }
+/* Đảm bảo rằng tất cả các link trong menu dropdown đều có hover hiệu ứng */
+.navbar .dropdown-menu a {
+    color: #333;
+    padding: 10px;
+    text-decoration: none;
+}
 
-    .nav-links {
-        flex-direction: column;
-        width: 100%;
-        display: none;
-    }
-
-    .nav-links li {
-        width: 100%;
-        text-align: center;
-    }
-
-    .nav-links a {
-        padding: 15px;
-    }
-
-    /* Hiển thị menu khi active */
-    .nav-links.active {
-        display: flex;
-    }
+.navbar .dropdown-menu a:hover {
+    background-color: #f1f1f1; /* Màu nền khi hover trong dropdown */
 }

@@ -220,6 +220,10 @@ def send_email(request, applicant_id):
                 email.attach_alternative(html_content, "text/html")
                 email.send()
 
+            # Cập nhật trạng thái email_sent
+            applicant.email_sent = True
+            applicant.save()
+
             messages.success(request, f"Email đã gửi tới {applicant.full_name}.")
             return redirect("admin:job_applicant_changelist")
     
