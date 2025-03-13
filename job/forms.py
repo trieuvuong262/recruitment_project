@@ -1,6 +1,7 @@
 from django import forms
 from .models import Applicant
 import requests  # Dùng để gọi API
+from .models import EmailTemplate
 
 class ApplicantForm(forms.ModelForm):
     class Meta:
@@ -44,3 +45,11 @@ class ApplicantForm(forms.ModelForm):
                     break
 
         return cleaned_data
+
+
+class EmailTemplateForm(forms.Form):
+    email_template = forms.ModelChoiceField(
+        queryset=EmailTemplate.objects.all(),
+        empty_label="Chọn mẫu email",
+        label="Mẫu Email"
+    )

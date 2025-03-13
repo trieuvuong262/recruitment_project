@@ -11,6 +11,7 @@ from django.core.mail import EmailMultiAlternatives
 import mimetypes
 import base64
 from django.http import HttpRequest
+from .forms import EmailTemplateForm
 
 
 def job_detail(request, slug):
@@ -157,3 +158,44 @@ def job_apply(request: HttpRequest, slug):
         form = ApplicantForm()
 
     return render(request, 'job/apply.html', {'job': job, 'form': form})
+
+def send_email(request, applicant_id):
+    applicant = get_object_or_404(Applicant, id=applicant_id)
+
+    if request.method == "POST":
+        form = EmailTemplateForm(request.POST)
+        if form.is_valid():
+            email_template = form.cleaned_data["email_template"]
+            
+            # Format nội dung email
+            subject = email_template.subject.format(job_title=applicant.job_title)
+            html_content = email_template.body.format(
+                full_name=applicant.full_name,
+                dob=applicant.dob,
+                phone=applicant.phone,
+                email=applicant.email,
+                street=applicant.street,
+                ward=applicant.ward,
+                district=applicant.district,
+                city=applicant.city,
+                education=applicant.education,
+                experience=applicant.experience,
+                job_title=applicant.job_title
+            )
+
+            # Gửi email
+            email = EmailMultiAlternatives(
+                subject=subject,
+                body="Vui lòng xem email dưới dạng HTML.",
+                from_email=settings.EMAIL_HOST_USER,
+                to=[applicant.email]
+            )
+            email.attach_alternative(html_content, "text/html")
+            email.send()
+
+            return redirect("admin:job_applicant_changelist")  # Chuyển hướng sau khi gửi
+
+    else:
+        form = EmailTemplateForm()
+
+    return render(request, "admin/send_email.html", {"form": form, "applicant": applicant})

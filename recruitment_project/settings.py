@@ -186,3 +186,23 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "trieuvuong1997@gmail.com"  # Email HR thứ nhất
 EMAIL_HOST_PASSWORD = "yeak atfz xzqi oehs"  # Mật khẩu hoặc App Password
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+EMAIL_ACCOUNTS = [
+    {
+        "email": "trieuvuong1997@gmail.com",
+        "password": "yeak atfz xzqi oehs",
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "use_tls": True,
+        "use_ssl": False,
+    },
+    {
+        "email": "trieuvuongabc1@gmail.com",
+        "password": "kaju cbfm ypdi wkto",
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "use_tls": True,
+        "use_ssl": False,
+    }
+]
