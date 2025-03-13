@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from unidecode import unidecode 
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives, get_connection
 import mimetypes
 import base64
 from django.http import HttpRequest
@@ -161,7 +161,7 @@ def job_apply(request: HttpRequest, slug):
 
 
 def send_email(request, applicant_id):
-    applicant = get_object_or_404(Applicant, id=applicant_id)  # Kiểm tra id hợp lệ
+    applicant = get_object_or_404(Applicant, id=applicant_id)
 
     # Lấy danh sách email từ settings
     email_choices = [(account["email"], account["name"]) for account in settings.EMAIL_ACCOUNTS]
@@ -172,35 +172,57 @@ def send_email(request, applicant_id):
             sender_email = form.cleaned_data["sender_email"]
             email_template = form.cleaned_data["email_template"]
 
-            # Format nội dung email
-            subject = email_template.subject.format(job_title=applicant.job_title)
-            html_content = email_template.body.format(
-                full_name=applicant.full_name,
-                dob=applicant.dob,
-                phone=applicant.phone,
-                email=applicant.email,
-                street=applicant.street,
-                ward=applicant.ward,
-                district=applicant.district,
-                city=applicant.city,
-                education=applicant.education,
-                experience=applicant.experience,
-                job_title=applicant.job_title
-            )
+            # Lấy thông tin tài khoản email
+            selected_account = next((acc for acc in settings.EMAIL_ACCOUNTS if acc["email"] == sender_email), None)
+            
+            if not selected_account:
+                messages.error(request, "Email không hợp lệ.")
+                return redirect("admin:job_applicant_changelist")
+
+            email_host_user = selected_account["email"]
+            email_host_password = selected_account.get("password")
+
+            if not email_host_password:
+                messages.error(request, "Không tìm thấy mật khẩu email. Vui lòng cập nhật settings.")
+                return redirect("admin:job_applicant_changelist")
+
+            # Kiểm tra và format nội dung email
+            context = {
+                "full_name": getattr(applicant, "full_name", "Ứng viên"),
+                "dob": getattr(applicant, "dob", "Không có"),
+                "phone": getattr(applicant, "phone", "Không có"),
+                "email": getattr(applicant, "email", "Không có"),
+                "street": getattr(applicant, "street", ""),
+                "ward": getattr(applicant, "ward", ""),
+                "district": getattr(applicant, "district", ""),
+                "city": getattr(applicant, "city", ""),
+                "education": getattr(applicant, "education", "Không có"),
+                "experience": getattr(applicant, "experience", "Không có"),
+                "job_title": getattr(applicant, "job_title", "Vị trí chưa xác định"),
+            }
+
+            try:
+                subject = email_template.subject.format(**context)
+                html_content = email_template.body.format(**context)
+            except KeyError as e:
+                messages.error(request, f"Thiếu dữ liệu cho biến: {str(e)}")
+                return redirect("admin:job_applicant_changelist")
 
             # Gửi email
-            email = EmailMultiAlternatives(
-                subject=subject,
-                body="Vui lòng xem email dưới dạng HTML.",
-                from_email=sender_email,
-                to=[applicant.email]
-            )
-            email.attach_alternative(html_content, "text/html")
-            email.send()
+            with get_connection(username=email_host_user, password=email_host_password) as connection:
+                email = EmailMultiAlternatives(
+                    subject=subject,
+                    body="Vui lòng xem email dưới dạng HTML.",
+                    from_email=email_host_user,
+                    to=[applicant.email],
+                    connection=connection
+                )
+                email.attach_alternative(html_content, "text/html")
+                email.send()
 
             messages.success(request, f"Email đã gửi tới {applicant.full_name}.")
             return redirect("admin:job_applicant_changelist")
-
+    
     else:
         form = EmailTemplateForm(email_choices=email_choices)
 

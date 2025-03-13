@@ -120,7 +120,7 @@ class Job(models.Model):
     
 
 class Applicant(models.Model):
-    full_name = models.CharField("Họ và tên", max_length=255)
+    full_name = models.CharField("Họ và tên của ứng viên", max_length=255)
     dob = models.DateField("Ngày sinh")
     phone = models.CharField("Số điện thoại", max_length=15)
     gender = models.CharField("Giới tính", max_length=10, choices=[('Nam', 'Nam'), ('Nữ', 'Nữ'), ('Khác', 'Khác')])

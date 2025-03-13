@@ -56,7 +56,7 @@ class SendEmailForm(forms.Form):
 
 class ApplicantAdmin(admin.ModelAdmin):
     list_display = (
-        "full_name", "dob", "phone", "gender", "status", "cccd", "email",
+        "full_name", "dob", "phone", "email",
         "job_title", "download_cv", "download_image", "send_email_button", "applied_at"
     )
     actions = ["send_interview_email"]
