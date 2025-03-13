@@ -159,14 +159,19 @@ def job_apply(request: HttpRequest, slug):
 
     return render(request, 'job/apply.html', {'job': job, 'form': form})
 
+
 def send_email(request, applicant_id):
     applicant = get_object_or_404(Applicant, id=applicant_id)
 
+    # Lấy danh sách email từ settings
+    email_choices = [(account["email"], account["name"]) for account in settings.EMAIL_ACCOUNTS]
+
     if request.method == "POST":
-        form = EmailTemplateForm(request.POST)
+        form = EmailTemplateForm(request.POST, email_choices=email_choices)
         if form.is_valid():
+            sender_email = form.cleaned_data["sender_email"]
             email_template = form.cleaned_data["email_template"]
-            
+
             # Format nội dung email
             subject = email_template.subject.format(job_title=applicant.job_title)
             html_content = email_template.body.format(
@@ -183,11 +188,11 @@ def send_email(request, applicant_id):
                 job_title=applicant.job_title
             )
 
-            # Gửi email
+            # Gửi email từ email đã chọn
             email = EmailMultiAlternatives(
                 subject=subject,
                 body="Vui lòng xem email dưới dạng HTML.",
-                from_email=settings.EMAIL_HOST_USER,
+                from_email=sender_email,
                 to=[applicant.email]
             )
             email.attach_alternative(html_content, "text/html")
@@ -196,6 +201,7 @@ def send_email(request, applicant_id):
             return redirect("admin:job_applicant_changelist")  # Chuyển hướng sau khi gửi
 
     else:
-        form = EmailTemplateForm()
+        # Luôn truyền danh sách email khi load trang
+        form = EmailTemplateForm(email_choices=email_choices)  
 
     return render(request, "admin/send_email.html", {"form": form, "applicant": applicant})

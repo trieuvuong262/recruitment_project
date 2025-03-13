@@ -2,6 +2,7 @@ from django import forms
 from .models import Applicant
 import requests  # Dùng để gọi API
 from .models import EmailTemplate
+from django.conf import settings
 
 class ApplicantForm(forms.ModelForm):
     class Meta:
@@ -48,8 +49,19 @@ class ApplicantForm(forms.ModelForm):
 
 
 class EmailTemplateForm(forms.Form):
+    sender_email = forms.ChoiceField(
+        choices=[],  # Ban đầu rỗng, sẽ cập nhật trong __init__
+        label="Chọn email gửi đi",
+        widget=forms.Select(attrs={"class": "form-control"})
+    )
+    
     email_template = forms.ModelChoiceField(
         queryset=EmailTemplate.objects.all(),
         empty_label="Chọn mẫu email",
-        label="Mẫu Email"
+        label="Mẫu Email",
+        widget=forms.Select(attrs={"class": "form-control"})
     )
+
+    def __init__(self, *args, email_choices=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["sender_email"].choices = email_choices or []  # Luôn cập nhật choices
